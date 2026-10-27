@@ -1,7 +1,7 @@
 import { pokemonsServices } from '../services/pokemons.services.js';
 
 class PokemonsController {
-  async getall(_req, res) {
+  async getAll(_req, res) {
     try {
       return res.json(await pokemonsServices.getall());
     } catch (error) {
@@ -54,4 +54,4 @@ class PokemonsController {
 
 }
 
-export const PokemonsController = new PokemonsController();
+export const pokemonsController = new PokemonsController();

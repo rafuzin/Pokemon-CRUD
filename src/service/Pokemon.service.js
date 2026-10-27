@@ -1,38 +1,27 @@
-import { pool } from "../config/db.js";
+import { pokemonRepository } from "../repositories/Pokemon.repositories.js";
 
-class pokemonService {
+class PokemonsService {
+    async getall() {
+        return pokemonRepository.getAll()
+    }
 
-    async getTudo() {
-        const res = await pool.query('SELECT * FROM pokemons');
-        return res.rows;
+    async getById(id) {
+        return pokemonRepository.getById(id)
     }
 
     async create(dados) {
-        const { nome, nivel, tipo } = dados;
-
-        const res = await pool.query(
-            'INSERT INTO pokemons (nome, nivel, tipo) VALUES ($1, $2, $3,) RETURNING *',
-            [nome, nivel, tipo]
-        );
-
-        return res.rows[0];
+        return pokemonRepository.create(dados)
     }
 
-    async update(id, dados) {
-        const { nome, nivel, tipo, treinador_id } = dados;
-        const res = await pool.query(
-            'UPDATE pokemons SET nome = $1, nivel = $2, tipo = $3, treinador_id = $4 WHERE id = $5 RETURNING *',
-            [nome, nivel, tipo, treinador_id, id]
-        );
-        return res.rows[0];
+    async update(id) {
+
+        return pokemonRepository.update(id)
     }
 
     async delete(id) {
-        const res = await pool.query('DELETE FROM pokemons WHERE id = $1 RETURNING *', [id]);
-        return res.rows[0];
+
+        return pokemonRepository.delete(id)
     }
 }
 
-
-
-export default new pokemonService();
+export const pokemonsServices = new PokemonsService();
